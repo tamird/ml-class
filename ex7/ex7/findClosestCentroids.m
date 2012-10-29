@@ -21,13 +21,12 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+[~, idx] = min(distEucSq(X, centroids),[],2);
 
 % =============================================================
 
 end
 
+function D = distEucSq(X, Y)
+D = bsxfun(@plus, dot(X,X,2), dot(Y,Y,2)') - 2*(X*Y');
+end

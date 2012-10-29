@@ -26,15 +26,12 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+P = bsxfun(@eq,idx,1:K);
+P = bsxfun(@rdivide, P, sum(P)); % no broadcasting
+% P ./= sum(P); % broadcasting
 
-
-
-
-
-
+centroids = P'*X;
 
 % =============================================================
 
-
 end
-
