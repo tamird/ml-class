@@ -196,7 +196,7 @@ options = optimset('GradObj', 'on', 'MaxIter', 100);
 
 % Set Regularization
 lambda = 10;
-theta = fmincg (@(t)(cofiCostFunc(t, Y, R, num_users, num_movies, ...
+theta = fmincg (@(t)(cofiCostFunc(t, Ynorm, R, num_users, num_movies, ...
                                 num_features, lambda)), ...
                 initial_parameters, options);
 
@@ -216,7 +216,7 @@ pause;
 %
 
 p = X * Theta';
-my_predictions = p(:,1) + Ymean;
+my_predictions = (p(:,1) + Ymean).*~my_ratings;
 
 movieList = loadMovieList();
 
@@ -224,8 +224,8 @@ movieList = loadMovieList();
 fprintf('\nTop recommendations for you:\n');
 for i=1:10
     j = ix(i);
-    fprintf('Predicting rating %.1f for movie %s\n', my_predictions(j), ...
-            movieList{j});
+    fprintf('Predicting rating %.1f for movie %d %s\n', my_predictions(j), ...
+            j, movieList{j});
 end
 
 fprintf('\n\nOriginal ratings provided:\n');
